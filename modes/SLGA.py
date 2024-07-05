@@ -109,7 +109,6 @@ class SLGA:
         print(f"{timepoint}: Generation {self.gen} - {self.scorer.count} molecules have been scored")
 
     def run(self):
-        self.write_status()
         for _ in range(1, self.iterations):
             offspring = self.reproduce()
             population = pd.concat([self.population, offspring])
