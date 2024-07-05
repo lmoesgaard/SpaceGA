@@ -51,8 +51,17 @@ class SLGA:
         population["mol"] = population.apply(lambda x: Chem.MolFromSmiles(x.smi), axis=1)
         population["scores"] = self.scorer.score(population.smi, self.cpu, self.gpu)
         population["generation"] = self.gen
+        return self.update_pop(population)
+
+    def update_pop(self, population):
         outname = os.path.join(self.o, f"gen_{self.gen}.parquet")
         population[["smi", "name", "scores", "generation"]].to_parquet(outname)
+        population = population.sort_values("scores", ascending=False)
+        mask = sim_filter(population.mol.to_list(), self.p_size, self.sim_cutoff)
+        population = population[mask]
+        outname = os.path.join(self.o, f"pop_{self.gen}.parquet")
+        self.population[["smi", "name", "scores", "generation"]].to_parquet(outname)
+        self.write_status()
         return population
 
     def pick_random_item(self, n, col):
@@ -98,16 +107,10 @@ class SLGA:
         seconds = time.time() - self.time
         timepoint = time.strftime('%H:%M:%S', time.gmtime(seconds))
         print(f"{timepoint}: Generation {self.gen} - {self.scorer.count} molecules have been scored")
-        outname = os.path.join(self.o, f"pop_{self.gen}.parquet")
-        self.population[["smi", "name", "scores", "generation"]].to_parquet(outname)
 
     def run(self):
         self.write_status()
         for _ in range(1, self.iterations):
             offspring = self.reproduce()
             population = pd.concat([self.population, offspring])
-            population = population.sort_values("scores", ascending=False)
-            mask = sim_filter(population.mol.to_list(), self.p_size, self.sim_cutoff)
-            population = population[mask]
-            self.population = population
-            self.write_status()
+            self.population = self.update_pop(population)

@@ -79,10 +79,10 @@ def sim_filter(mol_lst, pop_size, cutoff=0.35):
 
 
 def smi2array(smi):
-    mol = Chem.MolFromSmiles(smi)  # Convert SMILES to RDKit molecule
-    fp = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024)  # Generate Morgan fingerprint
-    array = np.zeros((0,), dtype=np.int8)  # Initialize an empty Numpy array
-    DataStructs.ConvertToNumpyArray(fp, array)  # Convert fingerprint to Numpy array
+    mol = Chem.MolFromSmiles(smi)
+    fp = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024)
+    array = np.zeros((0,), dtype=np.int8)
+    DataStructs.ConvertToNumpyArray(fp, array)
     return array
 
 
