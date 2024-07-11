@@ -8,7 +8,7 @@ The repository supports three different types of virtual screens:
 
 | Mode    | Description                   |
 |---------|-------------------------------|
-| al      | Active Learnign               |
+| al      | Active Learning               |
 | ga      | Graph-based genetic algorithm |
 | spacega | SpaceGA                       |
 
