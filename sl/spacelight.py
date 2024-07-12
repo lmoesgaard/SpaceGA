@@ -31,7 +31,7 @@ class simsearch():
         # filter off molecules that don't have desired properties
         mask, mols, smis = self.filter.substructure_filter(df["#result-smiles"].to_list())
         df = df[mask].copy()
-        df["mol"], df["smis"] = (mols, smis)
+        df["mol"], df["smi"] = (mols, smis)
         df = df[self.filter.filter_mol_lst(df["mol"])]
         # pick a set of children - the higher similarity, the higher the probability
         if df.shape[0] > self.children:
