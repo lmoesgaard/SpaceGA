@@ -14,7 +14,7 @@ from setup import read_config, make_workdir
 from sl.spacelight import simsearch
 
 
-class SLGA:
+class SpaceGA:
     def __init__(self, json_file):
         settings = read_config(json_file)
         make_workdir(settings)

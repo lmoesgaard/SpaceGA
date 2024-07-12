@@ -13,11 +13,6 @@ class simsearch():
         self.sample = int(children*100)
         self.taken = set()
         self.spacelight = spacelight
-        self.allowed = {"C", "O", "N", "I", "Br", "Cl", "F", "S"}
-
-    def check_weird_elements(self, m):
-        atoms = {a.GetSymbol() for a in m.GetAtoms()}
-        return len(atoms.difference(self.allowed)) > 0
 
     def search(self, smi, drop_first=True, scrample=True):
         # run spacelight
@@ -33,9 +28,8 @@ class simsearch():
             # remove molecules that have already been scored
             df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
             # filter off molecules that don't have desired properties
-            df["mol"] = df.apply(lambda x: Chem.MolFromSmiles(x["#result-smiles"]), axis=1)
+            df["mol"], df["smi"] = self.filter.substructure_filter(df["#result-smiles"].to_list())
             df = df[self.filter.filter_mol_lst(df["mol"])]
-            df = df[[not self.check_weird_elements(m) for m in df.mol]]
             # pick a set of children - the higher similarity, the higher the probability
             if df.shape[0] > self.children:
                 if scrample:
@@ -45,7 +39,7 @@ class simsearch():
             # remove output file
             os.remove(dst)
             # return the children
-            df = df[["#result-smiles", "result-name", "mol"]]
+            df = df[["smi", "result-name", "mol"]]
             df.columns = ["smi", "name", "mol"]
             return df
         except:

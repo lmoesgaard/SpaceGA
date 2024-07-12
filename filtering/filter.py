@@ -1,45 +1,93 @@
+import subprocess, os
 from rdkit import Chem
 from rdkit.Chem import Descriptors
+from rdkit.Chem.FilterCatalog import FilterCatalog, FilterCatalogParams
+from utils import generate_random_name
 
-default_inputs = {"minlogP": -float('inf'),
-                  "maxlogP": float('inf'),
-                  "minMw": 0,
-                  "maxMw": float('inf'),
-                  "minHBA": 0,
-                  "maxHBA": float('inf'),
-                  "minHBD": 0,
-                  "maxHBD": float('inf'),
-                  "minRings": 0,
-                  "maxRings": float('inf'),
-                  "minRotB": 0,
-                  "maxRotB": float('inf')
-                  }
+phys_filters = {"logP": Descriptors.MolLogP,
+                "Mw": Descriptors.MolWt,
+                "HBA": Descriptors.NumHAcceptors,
+                "HBD": Descriptors.NumHDonors,
+                "Rings": Descriptors.RingCount,
+                "RotB": Descriptors.NumRotatableBonds,
+                }
 
 
-def apply_filter(mol, filter_type):
-    prop = filter_type[2](mol)
-    return filter_type[0] <= prop <= filter_type[1]
+def smi_to_neutral_mol(smi):
+    mol = Chem.MolFromSmiles(smi)
+    pattern = Chem.MolFromSmarts("[+1!h0!$([*]~[-1,-2,-3,-4]),-1!$([*]~[+1,+2,+3,+4])]")
+    at_matches = mol.GetSubstructMatches(pattern)
+    at_matches_list = [y[0] for y in at_matches]
+    if len(at_matches_list) > 0:
+        for at_idx in at_matches_list:
+            atom = mol.GetAtomWithIdx(at_idx)
+            chg = atom.GetFormalCharge()
+            hcount = atom.GetTotalNumHs()
+            atom.SetFormalCharge(0)
+            atom.SetNumExplicitHs(hcount - chg)
+            atom.UpdatePropertyCache()
+    return mol
+
+
+class IntervalFilter:
+    def __init__(self, function):
+        self.lims = {"min": -float('inf'), "max": float('inf')}
+        self.function = function
+
+    def filter(self, mol):
+        prop = self.function(mol)
+        return self.lims["min"] <= prop <= self.lims["max"]
 
 
 class Filtering:
     def __init__(self, arguments):
-        filters = {**default_inputs, **arguments}
-        self.logP_filter = [filters["minlogP"], filters["maxlogP"], Descriptors.MolLogP]
-        self.Mw_filter = [filters["minMw"], filters["maxMw"], Descriptors.MolWt]
-        self.HBA_filter = [filters["minHBA"], filters["maxHBA"], Descriptors.NumHAcceptors]
-        self.HBD_filter = [filters["minHBD"], filters["maxHBD"], Descriptors.NumHDonors]
-        self.ring_filter = [filters["minRings"], filters["maxRings"], Descriptors.RingCount]
-        self.RotB_filter = [filters["minRotB"], filters["maxRotB"], Descriptors.NumRotatableBonds]
+        self.allowed = {"C", "O", "N", "I", "Br", "Cl", "F", "S"}
+        self.phys_filters = {}
+        self.Lilly = False
+        for argument in arguments:
+            if argument[:3] in {"min", "max"}:
+                lim = argument[:3]
+                name = argument[3:]
+                if name not in self.phys_filters:
+                    self.phys_filters[name] = IntervalFilter(phys_filters[name])
+                self.phys_filters[name].lims[lim] = arguments[argument]
+        if "Lilly" in arguments:
+            self.Lilly = arguments["Lilly"]
+        params = FilterCatalogParams()
+        if "PAINS" in arguments:
+            if arguments["PAINS"]:
+                params.AddCatalog(FilterCatalogParams.FilterCatalogs.PAINS_A)
+        if "BRENK" in arguments:
+            if arguments["BRENK"]:
+                params.AddCatalog(FilterCatalogParams.FilterCatalogs.BRENK)
+        self.catalog = FilterCatalog(params)
+
+    def check_weird_elements(self, m):
+        atoms = {a.GetSymbol() for a in m.GetAtoms()}
+        return len(atoms.difference(self.allowed)) > 0
+
+    def run_medchem_rules(self, fname):
+        cmd = f'{self.Lilly} -noapdm {fname}'
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        for line in iter(p.stdout.readline, b''):
+            yield line.decode('utf-8')
+
+    def run_lilly(self, smi_lst):
+        fname = os.path.join(os.path.dirname(self.Lilly).split()[-1], f"{generate_random_name(6)}.smi")
+        with open(fname, "w") as out:
+            for i, smi in enumerate(smi_lst):
+                out.write(f"{smi} i{i}\n")
+        output = [line.rstrip().split(" ")[0] for line in self.run_medchem_rules(fname)]
+        os.remove(fname)
+        return output
 
     def filter_mol(self, mol):
-        if apply_filter(mol, self.logP_filter):
-            if apply_filter(mol, self.Mw_filter):
-                if apply_filter(mol, self.HBA_filter):
-                    if apply_filter(mol, self.HBD_filter):
-                        if apply_filter(mol, self.ring_filter):
-                            if apply_filter(mol, self.RotB_filter):
-                                return True
-        return False
+        if self.check_weird_elements(mol):
+            return False
+        for filter in self.phys_filters:
+            if not self.phys_filters[filter].filter(mol):
+                return False
+        return True
 
     def filter_mol_lst(self, mol_lst):
         mask = []
@@ -57,3 +105,12 @@ class Filtering:
     def filter_smi(self, smi):
         mol = Chem.MolFromSmiles(smi)
         return self.filter_mol(mol)
+
+    def substructure_filter(self, smi_lst):
+        if self.Lilly:
+            smi_lst = self.run_lilly(smi_lst)
+        print(smi_lst)
+        mols = [smi_to_neutral_mol(smi) for smi in smi_lst]
+        mols = [mol for mol in mols if not self.catalog.HasMatch(mol)]
+        smi_lst = [Chem.MolToSmiles(mol) for mol in mols]
+        return mols, smi_lst
