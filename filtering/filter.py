@@ -109,7 +109,6 @@ class Filtering:
     def substructure_filter(self, smi_lst):
         if self.Lilly:
             smi_lst = self.run_lilly(smi_lst)
-        print(smi_lst)
         mols = [smi_to_neutral_mol(smi) for smi in smi_lst]
         mols = [mol for mol in mols if not self.catalog.HasMatch(mol)]
         smi_lst = [Chem.MolToSmiles(mol) for mol in mols]

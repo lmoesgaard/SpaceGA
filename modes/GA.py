@@ -2,6 +2,7 @@ import os
 import random
 from joblib import Parallel, delayed
 import time
+import warnings
 
 from rdkit import Chem, rdBase
 import pandas as pd
@@ -14,6 +15,8 @@ from filtering.filter import Filtering
 from utils import smifile2df, sim_filter, get_scorer
 from setup import read_config, make_workdir
 
+warnings.filterwarnings("ignore", message="A worker stopped while some jobs were given to the executor",
+                        category=UserWarning)
 
 class GA:
     def __init__(self, json_file):
