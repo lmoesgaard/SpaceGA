@@ -29,7 +29,9 @@ class simsearch():
         # remove molecules that have already been scored
         df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
         # filter off molecules that don't have desired properties
-        df["mol"], df["smi"] = self.filter.substructure_filter(df["#result-smiles"].to_list())
+        mask, mols, smis = self.filter.substructure_filter(df["#result-smiles"].to_list())
+        df = df[mask].copy()
+        df["mol"], df["smis"] = (mols, smis)
         df = df[self.filter.filter_mol_lst(df["mol"])]
         # pick a set of children - the higher similarity, the higher the probability
         if df.shape[0] > self.children:

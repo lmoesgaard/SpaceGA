@@ -1,4 +1,5 @@
 import subprocess, os
+import numpy as np
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 from rdkit.Chem.FilterCatalog import FilterCatalog, FilterCatalogParams
@@ -77,7 +78,7 @@ class Filtering:
         with open(fname, "w") as out:
             for i, smi in enumerate(smi_lst):
                 out.write(f"{smi} i{i}\n")
-        output = [line.rstrip().split(" ")[0] for line in self.run_medchem_rules(fname)]
+        output = [int(line.rstrip().split(" ")[1][1:]) for line in self.run_medchem_rules(fname)]
         os.remove(fname)
         return output
 
@@ -107,9 +108,18 @@ class Filtering:
         return self.filter_mol(mol)
 
     def substructure_filter(self, smi_lst):
+        mask = np.zeros(len(smi_lst)).astype(bool)
+        good_idx = np.arange(len(smi_lst))
         if self.Lilly:
-            smi_lst = self.run_lilly(smi_lst)
-        mols = [smi_to_neutral_mol(smi) for smi in smi_lst]
-        mols = [mol for mol in mols if not self.catalog.HasMatch(mol)]
-        smi_lst = [Chem.MolToSmiles(mol) for mol in mols]
-        return mols, smi_lst
+            good_idx = self.run_lilly(smi_lst)
+        mask[good_idx] = True
+        mols = []
+        smis = []
+        for idx in good_idx:
+            mol = smi_to_neutral_mol(smi_lst[idx])
+            if not self.catalog.HasMatch(mol):
+                mols.append(mol)
+                smis.append(Chem.MolToSmiles(mol))
+            else:
+                mask[idx] = False
+        return mask, mols, smis
