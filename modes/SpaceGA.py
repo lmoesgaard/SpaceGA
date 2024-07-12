@@ -60,7 +60,7 @@ class SpaceGA:
         mask = sim_filter(population.mol.to_list(), self.p_size, self.sim_cutoff)
         population = population[mask]
         outname = os.path.join(self.o, f"pop_{self.gen}.parquet")
-        self.population[["smi", "name", "scores", "generation"]].to_parquet(outname)
+        population[["smi", "name", "scores", "generation"]].to_parquet(outname)
         self.write_status()
         return population
 
