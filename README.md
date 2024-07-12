@@ -8,9 +8,9 @@ The repository supports three different types of virtual screens:
 
 | Mode    | Description                   |
 |---------|-------------------------------|
-| al      | Active Learning               |
-| ga      | Graph-based genetic algorithm |
-| spacega | SpaceGA                       |
+| AL      | Active Learning               |
+| GA      | Graph-based genetic algorithm |
+| SpaceGA | SpaceGA                       |
 
 Virtual screens can be initiated using the respective notebooks, i.e. <Mode>.ipynb, or directly in the command line by supplementing a .json file:
 python main.py <Mode> <path-to-json-file>.json
