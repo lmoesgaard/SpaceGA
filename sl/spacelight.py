@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-from rdkit import Chem
 from utils import submit_job_info, generate_random_name
 
 
@@ -25,22 +24,23 @@ class simsearch():
             if drop_first:
                 # drop first row - likely the input molecule
                 df = df.drop(0)
-            # remove molecules that have already been scored
-            df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
-            # filter off molecules that don't have desired properties
-            df["mol"], df["smi"] = self.filter.substructure_filter(df["#result-smiles"].to_list())
-            df = df[self.filter.filter_mol_lst(df["mol"])]
-            # pick a set of children - the higher similarity, the higher the probability
-            if df.shape[0] > self.children:
-                if scrample:
-                    df = df.sample(self.children, weights="similarity")
-                else:
-                    df = df.head(self.children)
-            # remove output file
-            os.remove(dst)
-            # return the children
-            df = df[["smi", "result-name", "mol"]]
-            df.columns = ["smi", "name", "mol"]
-            return df
         except:
             return None
+        # remove molecules that have already been scored
+        df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
+        # filter off molecules that don't have desired properties
+        df["mol"], df["smi"] = self.filter.substructure_filter(df["#result-smiles"].to_list())
+        df = df[self.filter.filter_mol_lst(df["mol"])]
+        # pick a set of children - the higher similarity, the higher the probability
+        if df.shape[0] > self.children:
+            if scrample:
+                df = df.sample(self.children, weights="similarity")
+            else:
+                df = df.head(self.children)
+        # remove output file
+        os.remove(dst)
+        # return the children
+        df = df[["smi", "result-name", "mol"]]
+        df.columns = ["smi", "name", "mol"]
+        return df
+
