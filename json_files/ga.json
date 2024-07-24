@@ -1,0 +1,32 @@
+{
+    "O": true,
+    "children": 100,
+    "config": "json_files/ga.json",
+    "cpu": 64,
+    "crossover_rate": 0.1,
+    "filtering_inputs": {
+        "maxHBA": 9,
+        "maxHBD": 5,
+        "maxMw": 460,
+        "maxRings": 4,
+        "maxRotB": 10,
+        "maxlogP": 4.2,
+        "minHBA": 0,
+        "minHBD": 0,
+        "minMw": 0,
+        "minRings": 0,
+        "minRotB": 0,
+        "minlogP": -4
+    },
+    "gpu": 8,
+    "i": "data/ZINC.smi",
+    "iterations": 20,
+    "mode": "FPSearch",
+    "mutation_rate": 1.0,
+    "o": "/path/to/output",
+    "p_size": 100,
+    "scoring_inputs": {
+        "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O"
+    },
+    "sim_cutoff": 0.35
+}

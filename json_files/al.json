@@ -1,0 +1,25 @@
+{
+    "O": true,
+    "bsize": 512,
+    "config": "json_files/al.json",
+    "cpu": 64,
+    "gpu": 8,
+    "i": "data",
+    "init_split": [
+        0.8,
+        0.1,
+        0.1
+    ],
+    "iterations": 10,
+    "maxmodels": 1,
+    "mode": "DockSearch",
+    "model_name": "NN1",
+    "o": "/path/to/output",
+    "p_size": 10000,
+    "scoring_inputs": {
+        "autodock": "/path/to/autodock_gpu",
+        "fld_file": "/data/examples/UROK/rec.maps.fld",
+        "obabel": "/path/to/obabel",
+        "workdir": "/path/to/output"
+    }
+}
