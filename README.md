@@ -21,7 +21,11 @@ The repository supports three different types of virtual screens:
 | GA      | [ graph-based genetic algorithm (GB-GA) ]( http://dx.doi.org/10.1039/C8SC05372C ) |
 | SpaceGA | SpaceGA                                                                           |
 
+<<<<<<< HEAD
 Virtual screens can be initiated using the respective notebooks, i.e. `<Mode>.ipynb`, or directly in the command line by supplementing a `.json` file:
+=======
+Virtual screens can be initiated using the respective notebooks, i.e. <Mode>.ipynb, or directly in the command line by supplementing a .json file:
+>>>>>>> abe7c56777e98b0d7af6dd35aaac3903ccbd9c40
 `python main.py <Mode> <path-to-json-file>.json`
 
 The notebooks are a great place to generate .json files for the desired virtual screens.
