@@ -61,7 +61,7 @@ Templates for setting up `.json` configuration files are available in the respec
 | `sim_cutoff`        | `float`  | Similarity cutoff applied after each iteration (`1.00`: no filtering)                               |
 | `space`             | `str`    | Path to desired BiosolveIT space                                                                    |
 | `spacelight`        | `str`    | Path to spacelight executable                                                                       |
-| `f_comp`            | `int`    | Find top f_comp*children most similar molecules to compensate for filtering                         |
+| `f_comp`            | `int`    | Find top `f_comp`*`children` most similar molecules to compensate for filtering                         |
 | `filtering_inputs`  | `dict`   | Dictionary with inputs for filtering (see below)                                                    |
 
 ## Scoring Function Arguments
