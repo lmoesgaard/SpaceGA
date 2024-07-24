@@ -33,13 +33,14 @@ class SpaceGA:
         self.gpu: int = settings["gpu"]
         self.sim_cutoff = settings["sim_cutoff"]
         self.space = settings["space"]
+        self.f_comp = settings["f_comp"]
         self.scorer = get_scorer(settings["mode"], settings["scoring_inputs"])
         self.filter = Filtering(settings["filtering_inputs"])
         self.gen = 1
         self.time = time.time()
         self.population = self.start_population()
         self.scratch = self.make_scratch()
-        self.search = simsearch(self.scratch, self.space, self.filter, self.children, settings["spacelight"])
+        self.search = simsearch(self.scratch, self.space, self.filter, self.children, self.f_comp, settings["spacelight"])
 
     def make_scratch(self):
         scratch = os.path.join(self.o, "scratch")
@@ -102,8 +103,6 @@ class SpaceGA:
         self.search.taken.update(offspring["name"])
         offspring["scores"] = self.scorer.score(offspring.smi, self.cpu, self.gpu)
         offspring["generation"] = self.gen
-        outname = os.path.join(self.o, f"gen_{self.gen}.parquet")
-        offspring[["smi", "name", "scores", "generation"]].to_parquet(outname)
         return offspring
 
     def write_status(self):

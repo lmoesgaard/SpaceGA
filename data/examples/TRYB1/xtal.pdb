@@ -1,0 +1,109 @@
+HEADER    HYDROLASE                               08-DEC-07   2ZEC
+TITLE     MDANALYSIS FRAME 0: Created by PDBWriter
+REMARK     4 2ZEC COMPLIES WITH FORMAT V. 3.0, 1-DEC-2006
+REMARK     888
+REMARK     888 WRITTEN BY MAESTRO (A PRODUCT OF SCHRODINGER, LLC)
+CRYST1   82.260   82.260  170.650  90.00  90.00  90.00 P 1           1
+HETATM    1  C4  11N A   1      22.148  77.719  82.924  1.00 17.30      A    C  
+HETATM    2  C5  11N A   1      20.771  77.448  82.691  1.00 21.13      A    C  
+HETATM    3  C6  11N A   1      19.765  77.829  83.673  1.00 20.69      A    C  
+HETATM    4  C7  11N A   1      23.873  78.763  84.676  1.00 23.01      A    C  
+HETATM    5  C8  11N A   1      23.533  79.738  85.775  1.00 23.69      A    C  
+HETATM    6  C10 11N A   1      24.599  79.384  83.446  1.00 20.44      A    C  
+HETATM    7  C13 11N A   1      26.080  77.678  85.402  1.00 25.15      A    C  
+HETATM    8  C15 11N A   1      20.376  76.779  81.372  1.00 19.79      A    C  
+HETATM    9  C17 11N A   1      27.654  77.601  83.407  1.00 23.69      A    C  
+HETATM   10  C20 11N A   1      29.311  75.877  83.080  1.00 28.79      A    C  
+HETATM   11  C22 11N A   1      28.964  73.345  83.417  1.00 30.32      A    C  
+HETATM   12  C24 11N A   1      30.725  71.744  82.796  1.00 21.70      A    C  
+HETATM   13  C26 11N A   1      31.088  74.156  82.473  1.00 31.42      A    C  
+HETATM   14  C1  11N A   1      20.162  78.456  84.901  1.00 19.90      A    C  
+HETATM   15  C2  11N A   1      21.520  78.723  85.126  1.00 23.14      A    C  
+HETATM   16  C3  11N A   1      22.532  78.344  84.108  1.00 25.01      A    C  
+HETATM   17  O15 11N A   1      22.238  79.328  86.252  1.00 23.31      A    O  
+HETATM   18  C11 11N A   1      26.105  79.555  83.727  1.00 24.19      A    C  
+HETATM   19  N22 11N A   1      26.709  78.333  84.253  1.00 23.28      A    N  
+HETATM   20  C14 11N A   1      24.590  77.458  85.115  1.00 23.73      A    C  
+HETATM   21  N33 11N A   1      20.034  77.834  80.436  1.00 17.79      A    N1+
+HETATM   22  O37 11N A   1      28.069  78.131  82.430  1.00 25.34      A    O  
+HETATM   23  C19 11N A   1      28.264  76.249  83.800  1.00 27.28      A    C  
+HETATM   24  C41 11N A   1      29.804  74.423  82.998  1.00 25.98      A    C  
+HETATM   25  C23 11N A   1      29.433  72.011  83.311  1.00 30.69      A    C  
+HETATM   26  C25 11N A   1      31.561  72.815  82.368  1.00 27.57      A    C  
+HETATM   27  HC4 11N A   1      22.882  77.421  82.191  1.00 17.30           H  
+HETATM   28  HC6 11N A   1      18.722  77.630  83.491  1.00 20.69           H  
+HETATM   29 H8_1 11N A   1      23.429  80.715  85.325  1.00 23.69           H  
+HETATM   30 H8_2 11N A   1      24.281  79.794  86.566  1.00 23.69           H  
+HETATM   31 H101 11N A   1      24.148  80.331  83.148  1.00 20.44           H  
+HETATM   32 H102 11N A   1      24.544  78.733  82.575  1.00 20.44           H  
+HETATM   33 H131 11N A   1      26.191  78.342  86.260  1.00 25.15           H  
+HETATM   34 H132 11N A   1      26.543  76.743  85.705  1.00 25.15           H  
+HETATM   35 H151 11N A   1      19.521  76.120  81.525  1.00 19.79           H  
+HETATM   36 H152 11N A   1      21.192  76.194  80.963  1.00 19.79           H  
+HETATM   37 HC20 11N A   1      29.822  76.552  82.407  1.00 28.79           H  
+HETATM   38 HC22 11N A   1      27.967  73.522  83.792  1.00 30.32           H  
+HETATM   39 HC24 11N A   1      31.074  70.726  82.708  1.00 21.70           H  
+HETATM   40 HC26 11N A   1      31.719  74.969  82.145  1.00 31.42           H  
+HETATM   41  HC1 11N A   1      19.417  78.741  85.627  1.00 19.90           H  
+HETATM   42 H111 11N A   1      26.233  80.325  84.488  1.00 24.19           H  
+HETATM   43 H112 11N A   1      26.596  79.955  82.840  1.00 24.19           H  
+HETATM   44 H141 11N A   1      24.507  76.706  84.330  1.00 23.73           H  
+HETATM   45 H142 11N A   1      24.096  77.031  85.989  1.00 23.73           H  
+HETATM   46 H331 11N A   1      19.741  77.456  79.541  1.00 17.79           H  
+HETATM   47 H332 11N A   1      19.283  78.403  80.803  1.00 17.79           H  
+HETATM   48 H333 11N A   1      20.843  78.419  80.286  1.00 17.79           H  
+HETATM   49 HC19 11N A   1      27.812  75.595  84.527  1.00 27.28           H  
+HETATM   50 HC23 11N A   1      28.786  71.199  83.590  1.00 30.69           H  
+HETATM   51 HC25 11N A   1      32.541  72.614  81.966  1.00 27.57           H  
+CONECT    1    2   16   27
+CONECT    2    1    3    8
+CONECT    3    2   14   28
+CONECT    4    5    6   16   20
+CONECT    5    4   17   29   30
+CONECT    6    4   18   31   32
+CONECT    7   19   20   33   34
+CONECT    8    2   21   35   36
+CONECT    9   19   22   23
+CONECT   10   23   24   37
+CONECT   11   24   25   38
+CONECT   12   25   26   39
+CONECT   13   24   26   40
+CONECT   14    3   15   41
+CONECT   15   14   16   17
+CONECT   16    1    4   15
+CONECT   17    5   15
+CONECT   18    6   19   42   43
+CONECT   19    7    9   18
+CONECT   20    4    7   44   45
+CONECT   21    8   46   47   48
+CONECT   22    9
+CONECT   23    9   10   49
+CONECT   24   10   11   13
+CONECT   25   11   12   50
+CONECT   26   12   13   51
+CONECT   27    1
+CONECT   28    3
+CONECT   29    5
+CONECT   30    5
+CONECT   31    6
+CONECT   32    6
+CONECT   33    7
+CONECT   34    7
+CONECT   35    8
+CONECT   36    8
+CONECT   37   10
+CONECT   38   11
+CONECT   39   12
+CONECT   40   13
+CONECT   41   14
+CONECT   42   18
+CONECT   43   18
+CONECT   44   20
+CONECT   45   20
+CONECT   46   21
+CONECT   47   21
+CONECT   48   21
+CONECT   49   23
+CONECT   50   25
+CONECT   51   26
+END

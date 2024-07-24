@@ -4,12 +4,12 @@ from utils import submit_job_info, generate_random_name
 
 
 class simsearch():
-    def __init__(self, scratch, space, propfilter, children, spacelight):
+    def __init__(self, scratch, space, propfilter, children, f_comp, spacelight):
         self.scratch = scratch
         self.space = space
         self.filter = propfilter
         self.children = children
-        self.sample = int(children*100)
+        self.sample = int(children*f_comp)
         self.taken = set()
         self.spacelight = spacelight
 

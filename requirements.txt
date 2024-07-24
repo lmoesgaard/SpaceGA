@@ -1,0 +1,7 @@
+numpy
+pandas
+pyarrow
+jupyter
+torch
+rdkit
+beautifulsoup4
