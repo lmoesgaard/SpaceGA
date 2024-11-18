@@ -169,13 +169,13 @@ class glide(Scorer):
         cmd += f"mv glide_subjob_poses.zip {os.path.join(self.pose_dir, str(self.iteration) + '_poses.zip')}\n"
         return cmd      
 
-    def process_glide_results(self, csv_file):
+    def process_glide_results(self, csv_file, smi):
         results = {i: 0 for i in range(len(smi))}
         df = pd.read_csv(csv_file)
         df = df[["title", "r_i_docking_score"]]
         for _, row in df.iterrows():
             results[row["title"]] = min(results[row["title"]], row["r_i_docking_score"])
-        return [results[i] for i in range(len(smi))]
+        return [-1*results[i] for i in range(len(smi))]
 
     def run_cmd(self, cmd):
         bash_file = os.path.join(self.scratch, "job.sh")
@@ -191,7 +191,7 @@ class glide(Scorer):
         cmd += self.run_glide(cpu)
         self.run_cmd(cmd)
         csv_file = os.path.join(self.scratch, "glide.csv")
-        scores = self.process_glide_results(csv_file)
+        scores = self.process_glide_results(csv_file, smi_lst)
         self.count += len(smi_lst)
         self.iteration += 1
         shutil.rmtree(self.scratch)
