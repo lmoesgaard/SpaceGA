@@ -34,7 +34,7 @@ class simsearch():
             # pick a set of children - the higher similarity, the higher the probability
             if df.shape[0] > self.children:
                 if scrample:
-                    df = df.sample(self.children, weights="similarity")
+                    df = df.sample(self.children, weights="fingerprint-similarity")
                 else:
                     df = df.head(self.children)
             # remove output file
