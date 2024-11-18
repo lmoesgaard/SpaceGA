@@ -132,11 +132,11 @@ class glide(Scorer):
         self.scratch = None
 
     def write_smi(self, df, smi_name):
-        df[["smi", "name"]].to_csv(smi_name, header=None, index=False, sep=" ")
+        df[["smi", "names"]].to_csv(smi_name, header=None, index=False, sep=" ")
 
     def run_ligprep(self, smi_lst, cpu):
-        df = pd.DataFrame(smi_lst).reset_index()
-        df.columns = ["name", "smi"]
+        df = pd.DataFrame(smi_lst, columns=["smi"])
+        df["names"] = np.arange(df.shape[0])
         smi_file = os.path.join(self.scratch, "ligs.smi")
         self.write_smi(df, smi_file)
         input_file = os.path.join(self.scratch, "ligprep.inp")
@@ -154,7 +154,7 @@ class glide(Scorer):
             f.write("NUM_STEREOISOMERS   1\n")
             f.write(f"OUT_MAE   ligs.mae\n")
         cmd = f"{os.path.join(self.schrodinger, 'ligprep')} -inp ligprep.inp -JOBNAME ligprep -HOST localhost:{cpu} -WAIT\n"
-        return cmd      
+        return cmd
 
     def run_glide(self, cpu):
         glide_file = os.path.join(self.scratch, "glide.in")
@@ -167,7 +167,7 @@ class glide(Scorer):
             f.write("PRECISION   SP\n")
         cmd = f"{os.path.join(self.schrodinger, 'glide')} {glide_file} -OVERWRITE -adjust -HOST localhost:{cpu} -TMPLAUNCHDIR -WAIT\n"
         cmd += f"mv glide_subjob_poses.zip {os.path.join(self.pose_dir, str(self.iteration) + '_poses.zip')}\n"
-        return cmd      
+        return cmd
 
     def process_glide_results(self, csv_file, smi):
         results = {i: 0 for i in range(len(smi))}
