@@ -174,7 +174,7 @@ class glide(Scorer):
         df = pd.read_csv(csv_file)
         df = df[["title", "r_i_docking_score"]]
         for _, row in df.iterrows():
-            results[int(row["title"])] = min(results[row["title"]], row["r_i_docking_score"])
+            results[int(row["title"])] = min(results[int(row["title"])], row["r_i_docking_score"])
         return [-1*results[i] for i in range(len(smi))]
 
     def run_cmd(self, cmd):
