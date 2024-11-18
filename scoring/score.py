@@ -183,7 +183,7 @@ class glide(Scorer):
             f.write(cmd)
         os.system(f"bash {bash_file}")
 
-    def score(self, smi_lst, cpu):
+    def score(self, smi_lst, cpu, gpu):
         self.scratch = os.path.join(self.workdir, generate_random_name(6))
         os.mkdir(self.scratch)
         cmd = f"cd {self.scratch}\n\n"
