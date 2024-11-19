@@ -26,6 +26,7 @@ class simsearch():
                 df = df.drop(0)
             # remove molecules that have already been scored
             df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
+            df = df.drop_duplicates("result-name")
             # filter off molecules that don't have desired properties
             mask, mols, smis = self.filter.substructure_filter(df["#result-smiles"].to_list())
             df = df[mask].copy()
