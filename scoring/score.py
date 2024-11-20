@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from joblib import Parallel, delayed
 import math
 import pandas as pd
+import numpy as np
 import os
 from rdkit import DataStructs
 import shutil
