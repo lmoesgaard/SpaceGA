@@ -24,25 +24,33 @@ class simsearch():
             if drop_first:
                 # drop first row - likely the input molecule
                 df = df.drop(0)
-            # remove molecules that have already been scored
-            df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
-            df = df.drop_duplicates("result-name")
-            # filter off molecules that don't have desired properties
-            mask, mols, smis = self.filter.substructure_filter(df["#result-smiles"].to_list())
-            df = df[mask].copy()
-            df["mol"], df["smi"] = (mols, smis)
-            df = df[self.filter.filter_mol_lst(df["mol"])]
-            # pick a set of children - the higher similarity, the higher the probability
-            if df.shape[0] > self.children:
-                if scrample:
-                    df = df.sample(self.children, weights="fingerprint-similarity")
-                else:
-                    df = df.head(self.children)
-            # remove output file
-            os.remove(dst)
-            # return the children
-            df = df[["smi", "result-name", "mol"]]
-            df.columns = ["smi", "name", "mol"]
-            return df
         except:
+            print("No output from SpaceLight")
             return None
+        # remove molecules that have already been scored
+        df = df[df.apply(lambda x: x["result-name"] not in self.taken, axis=1)]
+        # remove molecules that have already been scored
+        df = df.drop_duplicates("result-name")
+        # filter off molecules that don't have desired properties
+        mask, mols, smis = self.filter.substructure_filter(df["#result-smiles"].to_list())
+        df = df[mask].copy()
+        df["mol"], df["smi"] = (mols, smis)
+        if df.shape[0] == 0:
+            print("All molecules had bad substructures")
+            return None
+        df = df[self.filter.filter_mol_lst(df["mol"])]
+        if df.shape[0] == 0:
+            print("No molecules had desired properites")
+            return None
+        # pick a set of children - the higher similarity, the higher the probability
+        if df.shape[0] > self.children:
+            if scrample:
+                df = df.sample(self.children, weights="fingerprint-similarity")
+            else:
+                df = df.head(self.children)
+        # remove output file
+        os.remove(dst)
+        # return the children
+        df = df[["smi", "result-name", "mol"]]
+        df.columns = ["smi", "name", "mol"]
+        return df
