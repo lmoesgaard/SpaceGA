@@ -100,6 +100,7 @@ class SpaceGA:
         self.gen += 1
         offspring = Parallel(n_jobs=self.cpu)(delayed(self.generate_molecule)() for _ in range(self.p_size))
         offspring = pd.concat(offspring)
+        offspring = offspring.drop_duplicates("name")
         self.search.taken.update(offspring["name"])
         offspring["scores"] = self.scorer.score(offspring.smi, self.cpu, self.gpu)
         offspring["generation"] = self.gen
