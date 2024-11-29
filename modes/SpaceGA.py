@@ -73,11 +73,12 @@ class SpaceGA:
         sel = self.population.sample(n, weights=weights)
         return list(sel[col])
 
-    def generate_molecule(self):
+    def generate_molecule(self, n_tries=10):
         good_mol = False
         rdBase.DisableLog("rdApp.error")
         do_cross = random.random() < self.crossover_rate
-        while not good_mol:
+        while not good_mol and n_tries != 0:
+            n_tries -= 1
             if do_cross:
                 parents = self.pick_random_item(2, "mol")
                 mol = crossover(parents[0], parents[1])
@@ -94,6 +95,9 @@ class SpaceGA:
                             children = self.search.search(smi)
                         if children is not None:
                             good_mol = True
+        if children is None:
+            print("Failed to reproduce")
+            exit()
         return children
 
     def reproduce(self):
