@@ -95,15 +95,19 @@ class SpaceGA:
                             children = self.search.search(smi)
                         if children is not None:
                             good_mol = True
-        if children is None:
-            print("Failed to reproduce")
-            exit()
-        return children
+        if not good_mol:
+            return None
+        else:
+            return children
 
     def reproduce(self):
         self.gen += 1
         offspring = Parallel(n_jobs=self.cpu)(delayed(self.generate_molecule)() for _ in range(self.p_size))
-        offspring = pd.concat(offspring)
+        try:
+            offspring = pd.concat(offspring)
+        except:
+            print("Failed to reproduce")
+            sys.exit()
         offspring = offspring.drop_duplicates("name")
         self.search.taken.update(offspring["name"])
         offspring["scores"] = self.scorer.score(offspring.smi, self.cpu, self.gpu)
