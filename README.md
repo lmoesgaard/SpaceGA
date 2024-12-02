@@ -32,37 +32,38 @@ Before running, please ensure that fingerprint.npz and SMILES.parquet files are 
 # Supported Arguments
 Templates for setting up `.json` configuration files are available in the respective notebooks (`<Mode>.ipynb`).
 ## Search Tool Arguments
-| Argument            | dtype    | Description                                                                                         <tr><td colspan="3">**Recurring arguments**</td></tr>
-|---------------------|----------|-----------------------------------------------------------------------------------------------------|
-| `O`                 | `bool`   | Overwrite output directory                                                                          |
-| `o`                 | `str`    | Path to output directory                                                                            |
-| `iterations`        | `int`    | Number of iteration                                                                                 |
-| `cpu`               | `int`    | Number of CPUs available                                                                            |
-| `gpu`               | `int`    | Number of GPUs available                                                                            |
-| `mode`              | `str`    | Scoring function (FPSearch, LogPSearch or DockSearch)                                               |
-| `scoring_inputs`    | `dict`   | Dictionary with inputs for the scoring function (see below)                                         <tr><td colspan="3">**AL**</td></tr>
-| `i`                 | `str`    | Path to directory with the `smis` and `fps` directories. These can prepared using `data/convert.py` |
-| `p_size`            | `int`    | Number of molecules evaluated each iteration                                                        |
-| `model_name`        | `str`    | Name of ML model to use. ML models are stored in `ml/models.py`                                     |
-| `max_models`        | `int`    | Max number of models to run on each GPU for prediction                                              |
-| `bsize`             | `int`    | Batch size when training the ML model                                                               |
-| `init_split`        | `list`   | How to split data into train/val/test set after first iteration                                     <tr><td colspan="3">**GA**</td></tr>
-| `i`                 | `str`    | Path to `.smi` file with molecules to sample the start population                                   |
-| `p_size`            | `int`    | Population size                                                                                     |
-| `children`          | `ìnt`    | Number of molecules to evaluate per iteration divided by `p_size`                                   |
-| `crossover_rate`    | `float`  | Crossover rate                                                                                      |
-| `mutation_rate`     | `float`  | Mutation rate                                                                                       |
-| `sim_cutoff`        | `float`  | Similarity cutoff applied after each iteration (`1.00`: no filtering)                               |
-| `filtering_inputs`  | `dict`   | Dictionary with inputs for filtering (see below)                                                    <tr><td colspan="3">**SpaceGA**</td></tr>
-| `i`                 | `str`    | Path to `.smi` file with molecules to sample the start population                                   |
-| `p_size`            | `ìnt`    | Population size                                                                                     |
-| `children`          | `ìnt`    | Number of molecules to evaluate per iteration divided by `p_size`                                   |
-| `crossover_rate`    | `float`  | Crossover rate                                                                                      |
-| `sim_cutoff`        | `float`  | Similarity cutoff applied after each iteration (`1.00`: no filtering)                               |
-| `space`             | `str`    | Path to desired BiosolveIT space                                                                    |
-| `spacelight`        | `str`    | Path to spacelight executable                                                                       |
-| `f_comp`            | `int`    | Find top `f_comp`*`children` most similar molecules to compensate for filtering                         |
-| `filtering_inputs`  | `dict`   | Dictionary with inputs for filtering (see below)                                                    |
+| Argument           | dtype   | Description                                                                                         <tr><td colspan="3">**Recurring arguments**</td></tr> 
+|--------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `O`                | `bool`  | Overwrite output directory                                                                                                                                |
+| `o`                | `str`   | Path to output directory                                                                                                                                  |
+| `iterations`       | `int`   | Number of iteration                                                                                                                                       |
+| `cpu`              | `int`   | Number of CPUs available                                                                                                                                  |
+| `gpu`              | `int`   | Number of GPUs available                                                                                                                                  |
+| `mode`             | `str`   | Scoring function (FPSearch, LogPSearch or DockSearch)                                                                                                     |
+| `scoring_inputs`   | `dict`  | Dictionary with inputs for the scoring function (see below)                                         <tr><td colspan="3">**AL**</td></tr>                  
+| `i`                | `str`   | Path to directory with the `smis` and `fps` directories. These can prepared using `data/convert.py`                                                       |
+| `p_size`           | `int`   | Number of molecules evaluated each iteration                                                                                                              |
+| `model_name`       | `str`   | Name of ML model to use. ML models are stored in `ml/models.py`                                                                                           |
+| `max_models`       | `int`   | Max number of models to run on each GPU for prediction                                                                                                    |
+| `bsize`            | `int`   | Batch size when training the ML model                                                                                                                     |
+| `init_split`       | `list`  | How to split data into train/val/test set after first iteration                                     <tr><td colspan="3">**GA**</td></tr>                  
+| `i`                | `str`   | Path to `.smi` file with molecules to sample the start population                                                                                         |
+| `p_size`           | `int`   | Population size                                                                                                                                           |
+| `children`         | `ìnt`   | Number of molecules to evaluate per iteration divided by `p_size`                                                                                         |
+| `crossover_rate`   | `float` | Crossover rate                                                                                                                                            |
+| `mutation_rate`    | `float` | Mutation rate                                                                                                                                             |
+| `sim_cutoff`       | `float` | Similarity cutoff applied after each iteration (`1.00`: no filtering)                                                                                     |
+| `filtering_inputs` | `dict`  | Dictionary with inputs for filtering (see below)                                                    <tr><td colspan="3">**SpaceGA**</td></tr>             
+| `i`                | `str`   | Path to `.smi` file with molecules to sample the start population                                                                                         |
+| `p_size`           | `ìnt`   | Population size                                                                                                                                           |
+| `children`         | `ìnt`   | Number of molecules to evaluate per iteration divided by `p_size`                                                                                         |
+| `crossover_rate`   | `float` | Crossover rate                                                                                                                                            |
+| `sim_cutoff`       | `float` | Similarity cutoff applied after each iteration (`1.00`: no filtering)                                                                                     |
+| `space`            | `str`   | Path to desired BiosolveIT space                                                                                                                          |
+| `spacelight`       | `str`   | Path to spacelight executable                                                                                                                             |
+| `f_comp`           | `int`   | Find top `f_comp`*`children` most similar molecules to compensate for filtering                                                                           |
+| `filtering_inputs` | `dict`  | Dictionary with inputs for filtering (see below)                                                                                                          |
+| `sl_cpu`           | `int`   | Number of CPUs to use when running SpaceLight                                                                                                             |
 
 ## Scoring Function Arguments
 Currently, three different scoring functions are supported: FPSearch, LogPSearch, and DockSearch. FPSearch seeks to maximize Tanimoto similarity to a query molecule. LogPSearch seeks to maximize logP. DockSearch seeks to minimize [AutoDock-GPU](https://github.com/ccsb-scripps/AutoDock-GPU) docking scores. The scoring arguments are given as a dictionary. The following arguments are required.

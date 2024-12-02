@@ -30,7 +30,9 @@ class SpaceGA:
         self.generation_size = int(self.p_size * self.children)
         self.crossover_rate: float = settings["crossover_rate"]
         self.iterations: int = settings["iterations"]
-        self.cpu: int = settings["cpu"]
+        self.sl_cpu: int = settings["cpu"]
+        if "sl_cpu" in settings:
+            self.sl_cpu: int = settings["sl_cpu"]
         self.gpu: int = settings["gpu"]
         self.sim_cutoff = settings["sim_cutoff"]
         self.space = settings["space"]
@@ -103,7 +105,7 @@ class SpaceGA:
 
     def reproduce(self):
         self.gen += 1
-        offspring = Parallel(n_jobs=self.cpu)(delayed(self.generate_molecule)() for _ in range(self.p_size))
+        offspring = Parallel(n_jobs=self.sl_cpu)(delayed(self.generate_molecule)() for _ in range(self.p_size))
         try:
             offspring = pd.concat(offspring)
         except:

@@ -4,7 +4,7 @@ from utils import submit_job_info, generate_random_name
 
 
 class simsearch():
-    def __init__(self, scratch, space, propfilter, children, f_comp, spacelight):
+    def __init__(self, scratch, space, propfilter, children, f_comp, spacelight, al=False):
         self.scratch = scratch
         self.space = space
         self.filter = propfilter
@@ -12,6 +12,7 @@ class simsearch():
         self.sample = int(children*f_comp)
         self.taken = set()
         self.spacelight = spacelight
+        self.al = al
 
     def search(self, smi, drop_first=True, scrample=True):
         # run spacelight
@@ -43,7 +44,7 @@ class simsearch():
             print("No molecules had desired properites")
             return None
         # pick a set of children - the higher similarity, the higher the probability
-        if df.shape[0] > self.children:
+        if df.shape[0] > self.children and not self.al:
             if scrample:
                 df = df.sample(self.children, weights="fingerprint-similarity")
             else:
