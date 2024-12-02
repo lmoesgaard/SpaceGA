@@ -1,7 +1,6 @@
 from joblib import Parallel, delayed
 import pandas as pd
-from rdkit import Chem, DataStructs
-from rdkit.Chem import AllChem
+from rdkit import Chem, DataStructs, rdFingerprintGenerator
 import numpy as np
 import os
 import shutil
@@ -72,7 +71,7 @@ def create_directories(output_path, allow_overwrite):
 
 def process(smi):
     mol = Chem.MolFromSmiles(smi)  # Convert SMILES to RDKit molecule
-    fp = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024)  # Generate Morgan fingerprint
+    fp = rdFingerprintGenerator.GetMorganGenerator(mol, 2, nBits=1024)  # Generate Morgan fingerprint
     array = np.zeros((0, ), dtype=np.int8)  # Initialize an empty Numpy array
     DataStructs.ConvertToNumpyArray(fp, array)  # Convert fingerprint to Numpy array
     new_smi = Chem.MolToSmiles(mol)

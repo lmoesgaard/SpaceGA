@@ -5,7 +5,7 @@ import random
 import pandas as pd
 import numpy as np
 from rdkit import Chem, DataStructs
-from rdkit.Chem import AllChem, Crippen
+from rdkit.Chem import AllChem, Crippen, rdFingerprintGenerator
 
 
 def get_scorer(mode, arguments):
@@ -43,12 +43,12 @@ def split_df(df, n):
 
 def smi2fp(smi):
     m = Chem.MolFromSmiles(smi)
-    fp = AllChem.GetMorganFingerprintAsBitVect(m, radius=2)
+    fp = rdFingerprintGenerator.GetMorganGenerator(m, radius=2)
     return fp
 
 
 def mol2fp(m):
-    fp = AllChem.GetMorganFingerprintAsBitVect(m, radius=2)
+    fp = rdFingerprintGenerator.GetMorganGenerator(m, radius=2)
     return fp
 
 
@@ -80,7 +80,7 @@ def sim_filter(mol_lst, pop_size, cutoff=0.35):
 
 def smi2array(smi):
     mol = Chem.MolFromSmiles(smi)
-    fp = AllChem.GetMorganFingerprintAsBitVect(mol, 2, nBits=1024)
+    fp = rdFingerprintGenerator.GetMorganGenerator(mol, 2, nBits=1024)
     array = np.zeros((0,), dtype=np.int8)
     DataStructs.ConvertToNumpyArray(fp, array)
     return array
