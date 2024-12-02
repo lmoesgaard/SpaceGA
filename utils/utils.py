@@ -43,12 +43,12 @@ def split_df(df, n):
 
 def smi2fp(smi):
     m = Chem.MolFromSmiles(smi)
-    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=2048).GetFingerprint(mol)
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(mol)
     return fp
 
 
 def mol2fp(m):
-    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=2048).GetFingerprint(mol)
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(mol)
     return fp
 
 
@@ -80,7 +80,7 @@ def sim_filter(mol_lst, pop_size, cutoff=0.35):
 
 def smi2array(smi):
     mol = Chem.MolFromSmiles(smi)
-    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=2048).GetFingerprint(mol)
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(mol)
     array = np.zeros((0,), dtype=np.int8)
     DataStructs.ConvertToNumpyArray(fp, array)
     return array

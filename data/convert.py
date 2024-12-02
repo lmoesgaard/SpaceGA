@@ -71,7 +71,7 @@ def create_directories(output_path, allow_overwrite):
 
 def process(smi):
     mol = Chem.MolFromSmiles(smi)  # Convert SMILES to RDKit molecule
-    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=2048).GetFingerprint(mol)  # Generate Morgan fingerprint
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(mol)  # Generate Morgan fingerprint
     array = np.zeros((0, ), dtype=np.int8)  # Initialize an empty Numpy array
     DataStructs.ConvertToNumpyArray(fp, array)  # Convert fingerprint to Numpy array
     new_smi = Chem.MolToSmiles(mol)
