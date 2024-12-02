@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 from ml.train import get_model
-
+from utils import split_array, smi2array
 
 class MlScreen:
     def __init__(self, model_name, model_path, cpu, gpu, prefixes, population, basedir, maxmodels):
@@ -62,3 +62,39 @@ class MlScreen:
         del model
         torch.cuda.empty_cache()
         return preds
+
+class PredictScores:
+    def __init__(self, model_name, model_path, cpu, gpu):
+        self.model_name = model_name
+        self.model_path = model_path
+        self.gpu = gpu
+        self.cpu = cpu
+
+    def get_model(self):
+        model = get_model(self.model_name, 1024)
+        model.load_state_dict(torch.load(self.model_path))
+        model = model.to(torch.device(f"cuda:0"))
+        return model
+
+    def smis2a(self, smi_lst):
+        a = np.array([smi2array(s) for s in smi_lst])
+        return a
+
+    def run_pred(self, smi_lst):
+        model = self.get_model()
+        device = torch.device(f"cuda:0")
+
+        # Preprocess data
+        smi_lst = split_array(smi_lst, self.cpu)
+        a = Parallel(n_jobs=self.cpu)(delayed(self.smis2a)(lst) for lst in smi_lst)
+        a = np.concatenate(a).astype(np.float32)
+        a = torch.tensor(a).to(device)
+
+        # Model prediction
+        with torch.no_grad():
+            pred = model(a).flatten().to("cpu").numpy()
+
+        # Free up memory
+        del a, model
+        torch.cuda.empty_cache()
+        return pred
