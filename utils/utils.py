@@ -43,12 +43,12 @@ def split_df(df, n):
 
 def smi2fp(smi):
     m = Chem.MolFromSmiles(smi)
-    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(mol)
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(m)
     return fp
 
 
 def mol2fp(m):
-    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(mol)
+    fp = rdFingerprintGenerator.GetMorganGenerator(radius=2,fpSize=1024).GetFingerprint(m)
     return fp
 
 
