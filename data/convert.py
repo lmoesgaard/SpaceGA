@@ -1,6 +1,7 @@
 from joblib import Parallel, delayed
 import pandas as pd
-from rdkit import Chem, DataStructs, rdFingerprintGenerator
+from rdkit import Chem, DataStructs
+from rdkit.Chem import rdFingerprintGenerator
 import numpy as np
 import os
 import shutil
@@ -78,7 +79,7 @@ def process(smi):
     return array, new_smi
 
 def main():
-    parser = argparse.ArgumentParser(description='Process SMILES file' epilog='Example: python convert.py -O -i ZINC.smi -n 5 --cpu 5')
+    parser = argparse.ArgumentParser(description='Process SMILES file', epilog='Example: python convert.py -O -i ZINC.smi -n 5 --cpu 5')
     parser.add_argument('-O', action='store_true', help='Allow overwriting of directories')
     parser.add_argument('-i', type=str, required=True, help='Input space-separated SMILES file without header')
     parser.add_argument('-o', type=str, default=".", help='Output destination to create directories fps and smis')
