@@ -62,7 +62,6 @@ def smifile2df(smifile):
     return df
 
 
-
 def sim_filter(mol_lst, pop_size, cutoff=0.35):
     fps = [mol2fp(mol_lst[0])]
     mask = np.zeros(len(mol_lst), dtype=bool)
