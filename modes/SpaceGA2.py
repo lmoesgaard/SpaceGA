@@ -47,6 +47,7 @@ class SpaceGA2:
         self.bsize: int = settings["bsize"]
         self.model_name = settings["model_name"]
         self.model_path = self.outname("model.pth")
+        settings["scoring_inputs"]["workdir"] = settings["o"]
         self.scorer = get_scorer(settings["mode"], settings["scoring_inputs"])
         self.filter = Filtering(settings["filtering_inputs"])
         self.gen = 1

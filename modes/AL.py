@@ -32,6 +32,7 @@ class AL:
         self.bsize: int = settings["bsize"]
         self.model_name = settings["model_name"]
         self.model_path = self.outname("model.pth")
+        settings["scoring_inputs"]["workdir"] = settings["o"]
         self.scorer = get_scorer(settings["mode"], settings["scoring_inputs"])
         self.gen = 1
         self.make_ml_dirs()

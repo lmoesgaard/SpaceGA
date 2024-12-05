@@ -34,6 +34,7 @@ class GA:
         self.cpu: int = settings["cpu"]
         self.gpu: int = settings["gpu"]
         self.sim_cutoff: float = settings["sim_cutoff"]
+        settings["scoring_inputs"]["workdir"] = settings["o"]
         self.scorer = get_scorer(settings["mode"], settings["scoring_inputs"])
         self.filter = Filtering(settings["filtering_inputs"])
         self.gen = 1

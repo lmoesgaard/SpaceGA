@@ -38,6 +38,7 @@ class SpaceGA:
         self.sim_cutoff = settings["sim_cutoff"]
         self.space = settings["space"]
         self.f_comp = settings["f_comp"]
+        settings["scoring_inputs"]["workdir"] = settings["o"]
         self.scorer = get_scorer(settings["mode"], settings["scoring_inputs"])
         self.filter = Filtering(settings["filtering_inputs"])
         self.gen = 1
