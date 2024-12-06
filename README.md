@@ -67,14 +67,16 @@ Templates for setting up `.json` configuration files are available in the respec
 
 ## Scoring Function Arguments
 Currently, three different scoring functions are supported: FPSearch, LogPSearch, and DockSearch. FPSearch seeks to maximize Tanimoto similarity to a query molecule. LogPSearch seeks to maximize logP. DockSearch seeks to minimize [AutoDock-GPU](https://github.com/ccsb-scripps/AutoDock-GPU) docking scores. The scoring arguments are given as a dictionary. The following arguments are required.
-| Argument   | dtype | Description                                                                     <tr><td colspan="3">**FPSearch**</td></tr>
-|:-----------|:------|:--------------------------------------------------------------------------------|
-| "smiles"   | `str` | Query SMILES-string to maximize similarity to                                   <tr><td colspan="3">**LogPSearch**</td></tr>
-| `None`     |       |                                                                                 <tr><td colspan="3">**DockSearch**</td></tr>
-| "fld_file" | `str` | Path to `.fld` file                                                             |
-| "autodock" | `str` | Path to [AutoDock-GPU](https://github.com/ccsb-scripps/AutoDock-GPU) executable |
-| "workdir"  | `str` | Path to working directory                                                       |
-| "obabel"   | `str` | Path to [Open Babel](https://openbabel.org/index.html#) executable              |
+| Argument      | dtype | Description                                                                     <tr><td colspan="3">**FPSearch**</td></tr>
+|:--------------|:------|:--------------------------------------------------------------------------------|
+| "smiles"      | `str` | Query SMILES-string to maximize similarity to                                   <tr><td colspan="3">**LogPSearch**</td></tr>
+| `None`        |       |                                                                                 <tr><td colspan="3">**DockSearch**</td></tr>
+| "fld_file"    | `str` | Path to `.fld` file                                                             |
+| "autodock"    | `str` | Path to [AutoDock-GPU](https://github.com/ccsb-scripps/AutoDock-GPU) executable |
+| "obabel"      | `str` | Path to [Open Babel](https://openbabel.org/index.html#) executable              <tr><td colspan="3">**CustomSearch**</td></tr>
+| "module_name" | `str` | Name of custom module                                                           |
+| "class_name"  | `str` | Name of desired class inside the custom module to import                        |
+| "config"      | `str` | Path to .json file with input required by the class                             |
 
 ## Filtering Arguments
 Filtering is available for GA and SpaceGA. The filtering arguments are given as a dictionary, only including filters that should be applied. The following arguments are available.
