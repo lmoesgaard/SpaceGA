@@ -1,4 +1,5 @@
-import subprocess, os
+import subprocess
+import os
 import numpy as np
 from rdkit import Chem
 from rdkit.Chem import Descriptors
@@ -45,6 +46,7 @@ class Filtering:
         self.allowed = {"C", "O", "N", "I", "Br", "Cl", "F", "S"}
         self.phys_filters = {}
         self.Lilly = False
+        self.substructure = False
         for argument in arguments:
             if argument[:3] in {"min", "max"}:
                 lim = argument[:3]
@@ -52,6 +54,10 @@ class Filtering:
                 if name not in self.phys_filters:
                     self.phys_filters[name] = IntervalFilter(phys_filters[name])
                 self.phys_filters[name].lims[lim] = arguments[argument]
+        if "Substructure" in arguments:
+            self.substructure = Chem.MolFromSmarts(arguments["Substructure"])
+        else:
+            self.substructure = Chem.MolFromSmarts("C")
         if "Lilly" in arguments:
             self.Lilly = arguments["Lilly"]
         params = FilterCatalogParams()
@@ -117,7 +123,7 @@ class Filtering:
         smis = []
         for idx in good_idx:
             mol = smi_to_neutral_mol(smi_lst[idx])
-            if not self.catalog.HasMatch(mol):
+            if not self.catalog.HasMatch(mol) and mol.HasSubstructMatch(self.substructure):
                 mols.append(mol)
                 smis.append(Chem.MolToSmiles(mol))
             else:
