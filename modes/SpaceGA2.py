@@ -17,7 +17,7 @@ from filtering.filter import Filtering
 from utils import smifile2df, sim_filter, get_scorer, split_array, get_train_mask, smi2array, split_df
 from setup import read_config, make_workdir
 from sl.spacelight import simsearch
-from ml.train import train_model, get_model
+from ml.train import train_model
 from ml.data import DataGen
 from ml.pred import PredictScores
 
