@@ -4,7 +4,6 @@ import numpy as np
 import os
 import shutil
 
-from setup import read_config
 from utils import generate_random_name
 
 
@@ -112,19 +111,3 @@ class GlideScorer(Scorer):
         self.iteration += 1
         shutil.rmtree(self.scratch)
         return scores
-
-
-def load_class(arguments):
-    module = __import__(arguments["module_name"], fromlist=[arguments["class_name"]])
-    return getattr(module, arguments["class_name"])
-
-
-class CustomSearch:
-    def __init__(self, arguments):
-        arguments = read_config(arguments["config"])
-        self.method = load_class(arguments)()
-        self.count = 0
-
-    def score(self, smi_lst, cpu, gpu):
-        self.count += 1
-        return self.method.score(smi_lst, cpu, gpu)
