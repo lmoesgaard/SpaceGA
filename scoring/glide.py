@@ -28,13 +28,13 @@ class GlideScorer(Scorer):
     Example input dictionary:
     {
         "workdir": "/path/to/workdir",
-        "grid": "/path/to/glide_grid.zip",
+        "grids": "/path/to/glide_grid.zip",
         "schrodinger": "/path/to/schrodinger/installation"
     }
     """
     def __init__(self, arguments):
         self.workdir = arguments["workdir"]
-        self.grid = arguments["grid"]
+        self.grid = arguments["grids"]
         self.schrodinger = arguments["schrodinger"]
         self.pose_dir = os.path.join(arguments["workdir"], "poses")
         try:
@@ -77,11 +77,18 @@ class GlideScorer(Scorer):
             f.write(f"GRIDFILE   {self.grid}\n")
             f.write("LIGANDFILE   ligs.mae\n")
             f.write("NREPORT   1\n")
+            f.write("POSTDOCKSTRAIN   True\n")
             f.write("POSE_OUTTYPE   ligandlib_sd\n")
             f.write("PRECISION   SP\n")
         cmd = f"{os.path.join(self.schrodinger, 'glide')} {glide_file}"
         cmd += f" -OVERWRITE -adjust -HOST localhost:{cpu} -TMPLAUNCHDIR -WAIT\n"
         cmd += f"mv glide_subjob_poses.zip {os.path.join(self.pose_dir, str(self.iteration) + '_poses.zip')}\n"
+        cmd += f"unzip {os.path.join(self.pose_dir, str(self.iteration) + '_poses.zip')} -d {self.pose_dir} \n"
+        cmd += f"cd {self.pose_dir} \n"
+        cmd += 'for file in *_raw.sdfgz; do\n\tmv "$file" "${file/_raw.sdfgz/.sdf.gz}"\ndone\n'
+        cmd += "gunzip *.sdf.gz\n"
+        cmd += f"cat glide*sdf > {self.iteration}_glide_poses.sdf\n"
+        cmd += "rm *zip\n rm glide*sdf\n"
         return cmd
 
     def process_glide_results(self, csv_file, smi):
