@@ -6,15 +6,15 @@ import os
 from rdkit import DataStructs
 import shutil
 
-from setup import read_config
 from utils import split_df, smi2fp, logP, generate_random_name, submit_job
 from scoring.autodock import AutodockGpu
 from scoring.get_scores import process_files
+from setup import read_config
 
 
-def load_class(arguments):
-    module = __import__(arguments["module_name"], fromlist=[arguments["class_name"]])
-    return getattr(module, arguments["class_name"])
+def load_class(class_name, module_name):
+    module = __import__(module_name, fromlist=[class_name])
+    return getattr(module, class_name)
 
 
 class Scorer(ABC):
@@ -92,7 +92,6 @@ class DockSearch(Scorer):
         return scores
 
     def score_batch(self, df, cpu, gpu):
-
         self.scratch = os.path.join(self.workdir, generate_random_name(6))
         try:
             os.mkdir(self.scratch)
@@ -125,8 +124,9 @@ class DockSearch(Scorer):
 
 class CustomSearch:
     def __init__(self, arguments):
-        arguments = read_config(arguments["config"])
-        self.method = load_class(arguments)()
+        class_inputs = read_config(arguments["config"])
+        class_inputs["workdir"] = arguments["workdir"]
+        self.method = load_class(class_name=arguments["class_name"], module_name=arguments["module_name"])(class_inputs)
         self.count = 0
 
     def score(self, smi_lst, cpu, gpu):

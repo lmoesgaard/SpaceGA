@@ -1,0 +1,42 @@
+{
+    "O": true,
+    "bsize": 512,
+    "children": 100,
+    "config": "json_files/spacega2.json",
+    "cpu": 64,
+    "crossover_rate": 0.1,
+    "f_comp": 100,
+    "filtering_inputs": {
+        "BRENK": true,
+        "PAINS": true,
+        "Substructure": "CCCO",
+        "maxHBA": 9,
+        "maxHBD": 5,
+        "maxMw": 460,
+        "maxRings": 4,
+        "maxRotB": 10,
+        "maxlogP": 100,
+        "minHBA": 0,
+        "minHBD": 0,
+        "minMw": 0,
+        "minRings": 0,
+        "minRotB": 0,
+        "minlogP": -4
+    },
+    "gpu": 8,
+    "i": "data/ZINC.smi",
+    "iterations": 10,
+    "mode": "CustomSearch",
+    "model_name": "NN1",
+    "o": "/path/to/output",
+    "p_size": 100,
+    "scoring_inputs": {
+        "class_name": "GlideScorer",
+        "config": "json_files/glide.json",
+        "module_name": "scoring.glide"
+    },
+    "sim_cutoff": 1.0,
+    "sl_cpu": 64,
+    "space": "data/desired_space.space",
+    "spacelight": "/path/to/spacelight"
+}

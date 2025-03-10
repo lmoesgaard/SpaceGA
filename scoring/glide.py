@@ -86,7 +86,7 @@ class GlideScorer(Scorer):
         cmd += f"unzip {os.path.join(self.pose_dir, str(self.iteration) + '_poses.zip')} -d {self.pose_dir} \n"
         cmd += f"cd {self.pose_dir} \n"
         cmd += 'for file in *_raw.sdfgz; do\n\tmv "$file" "${file/_raw.sdfgz/.sdf.gz}"\ndone\n'
-        cmd += "gunzip *.sdf.gz\n"
+        cmd += "gunzip *.sdf.gz  > /dev/null 2>&1 \n"
         cmd += f"cat glide*sdf > {self.iteration}_glide_poses.sdf\n"
         cmd += "rm *zip\n rm glide*sdf\n"
         return cmd
