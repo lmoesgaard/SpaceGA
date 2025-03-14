@@ -9,7 +9,7 @@ setup(
     long_description=open("README.md").read(),  # Ensure you have a README.md
     long_description_content_type="text/markdown",  # Specify README format
     url="https://github.com/lmoesgaard/SpaceGA",  # GitHub repository URL
-    packages=find_packages(),  # Automatically find and include all packages
+    packages=find_packages(),  # Exclude SpaceGApaper directory
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",  # Replace with your license if different
@@ -17,13 +17,10 @@ setup(
     ],
     python_requires=">=3.8",  # Specify the minimum Python version
     install_requires=[
-        "beautifulsoup4"
-        "h5py"
-        "jupyter"
-        "numpy"
-        "pandas"
-        "pyarrow"
-        "rdkit-pypi"
-        "torch"
+        "jupyter",
+        "numpy",
+        "pandas",
+        "rdkit",
+        "scikit-learn",
     ],
 )
