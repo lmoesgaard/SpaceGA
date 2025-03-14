@@ -6,9 +6,9 @@ from rdkit import Chem, rdBase
 import random
 import pandas as pd
 
-from utils import smifile2df, mol2array
-from ga import crossover, neutralize_molecules
-from sl.spacelight import Simsearch
+from SpaceGA.utils import smifile2df, mol2array
+from SpaceGA.ga import crossover, neutralize_molecules
+from SpaceGA.sl.spacelight import Simsearch
 
 class Reproduce:
     def pick_random_item(self, n, col):

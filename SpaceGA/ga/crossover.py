@@ -4,7 +4,7 @@ from typing import List, Union
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-from ga.molecule import mol_ok, ring_ok
+from SpaceGA.ga.molecule import mol_ok, ring_ok
 
 
 def cut(mol: Chem.Mol) -> Union[None, List[Chem.Mol]]:

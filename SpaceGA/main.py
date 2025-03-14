@@ -1,7 +1,7 @@
 import sys
 import json
 import importlib
-from spacega import SpaceGA
+from .spacega import SpaceGA
 
 def get_scoring_tool(module, tool):
     module = importlib.import_module(module)

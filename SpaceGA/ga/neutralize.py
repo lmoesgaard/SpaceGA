@@ -3,6 +3,7 @@
 import copy
 import json
 from typing import List, Tuple
+import pkg_resources
 
 from rdkit import Chem
 
@@ -10,7 +11,7 @@ _neutralize_reactions = None
 
 
 def read_neutralizers(name="neutralize") -> List[Tuple[Chem.Mol, Chem.Mol]]:
-    filename = f"ga/{name}.json"
+    filename = pkg_resources.resource_filename('SpaceGA', f"ga/{name}.json")
     with open(filename) as json_file:
         reactions = json.load(json_file)
         neutralize_reactions = []

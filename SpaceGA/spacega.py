@@ -10,9 +10,9 @@ import shutil
 import logging
 import time
 
-from utils import sim_filter
-from ml.mltools import MLtools
-from ga.reproduce import Reproduce
+from SpaceGA.utils import sim_filter
+from SpaceGA.ml.mltools import MLtools
+from SpaceGA.ga.reproduce import Reproduce
 
 
 @dataclass
@@ -36,7 +36,6 @@ class SpaceGASettings:
     f_comp: int = 100
     fp_type: str = "ECFP4"
     model_name: str = "NN1"
-    patience: int = 5
     config: str = 'json_files/spacega2.json'
     scoring_tool: Dict[str, float] = field(default_factory=lambda: 
                                            {"module": "scoring", "tool": "LogPSearch"})

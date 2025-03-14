@@ -1,1 +1,1 @@
-from setup.setup import *
+from SpaceGA.setup.setup import *

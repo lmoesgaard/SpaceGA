@@ -1,1 +1,1 @@
-from utils.utils import *
+from SpaceGA.utils.utils import *

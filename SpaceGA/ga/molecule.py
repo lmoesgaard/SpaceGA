@@ -1,11 +1,12 @@
 from typing import Union
-
+import pkg_resources
 import pandas as pd
 from rdkit import Chem
-from filtering.sascorer import calculateScore
+from SpaceGA.filtering.sascorer import calculateScore
 
+file_path = pkg_resources.resource_filename('SpaceGA', 'filtering/allert_collection.csv')
 molecule_filters = [Chem.MolFromSmarts(smart) for smart in
-                    pd.read_csv("filtering/allert_collection.csv")["smarts"]]
+                    pd.read_csv(file_path)["smarts"]]
 
 
 def ring_ok(mol: Chem.Mol) -> bool:

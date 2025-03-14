@@ -1,1 +1,1 @@
-from filtering.filter import Filtering
+from SpaceGA.filtering.filter import Filtering

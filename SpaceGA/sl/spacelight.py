@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-from utils import submit_job_info, generate_random_name
-from filtering import Filtering
+from SpaceGA.utils import submit_job_info, generate_random_name
+from SpaceGA.filtering import Filtering
 
 class Simsearch():
     def __init__(self, settings, taken):

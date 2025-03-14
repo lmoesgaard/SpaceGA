@@ -1,1 +1,1 @@
-from scoring.basic import FPSearch, LogPSearch
+from SpaceGA.scoring.basic import FPSearch, LogPSearch

@@ -4,7 +4,8 @@ import numpy as np
 from rdkit import Chem
 from rdkit.Chem import Descriptors
 from rdkit.Chem.FilterCatalog import FilterCatalog, FilterCatalogParams
-from utils import generate_random_name
+from SpaceGA.utils import generate_random_name
+
 
 phys_filters = {"logP": Descriptors.MolLogP,
                 "Mw": Descriptors.MolWt,

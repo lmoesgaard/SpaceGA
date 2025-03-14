@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from joblib import Parallel, delayed
 from rdkit import DataStructs
 
-from utils import smi2fp, logP
+from SpaceGA.utils import smi2fp, logP
 
 
 class Scorer(ABC):

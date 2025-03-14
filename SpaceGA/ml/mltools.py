@@ -11,7 +11,7 @@ def get_model(modelname):
     """
     import SciKit model from ml.models
     """
-    module = importlib.import_module("ml.models")
+    module = importlib.import_module("SpaceGA.ml.models")
     try:
         model = getattr(module, modelname)()
         return model
