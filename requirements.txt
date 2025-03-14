@@ -1,8 +1,5 @@
-beautifulsoup4
-h5py
 jupyter
 numpy
 pandas
-pyarrow
 rdkit
-torch
+scikit-learn

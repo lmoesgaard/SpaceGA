@@ -18,13 +18,13 @@ from SpaceGA.ga.reproduce import Reproduce
 @dataclass
 class SpaceGASettings:
     # Required arguments
-    O: bool
     o: str
     i: str
     space: str
     spacelight: str
     
     # Optional arguments
+    O: bool = False
     p_size: int = 100
     children: int = 100
     crossover_rate: float = 0.2
